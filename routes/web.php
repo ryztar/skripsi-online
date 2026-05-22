@@ -70,3 +70,14 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->name('mahasi
     Route::get('/riwayat', [MahasiswaController::class, 'mahasiswaRiwayat'])->name('riwayat');
     Route::get('/delete-file/{id}', [MahasiswaController::class, 'mahasiswaDeleteFile'])->name('delete_file');
 });
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/init-database', function () {
+    try {
+        Artisan::call('migrate:fresh --seed');
+        return "Database Supabase berhasil dimigrasi dan di-seed!";
+    } catch (\Exception $e) {
+        return "Gagal migrasi: " . $e->getMessage();
+    }
+});
